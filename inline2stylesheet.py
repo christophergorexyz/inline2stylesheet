@@ -10,9 +10,9 @@ class inline2stylesheet(HTMLParser):
         attrDict = dict(attrs)
         if(not attrDict.has_key('style')): return
         styleString = attrDict['style']
-        styleList = [rule.strip()+";" for rule in styleString.split(';') if rule.strip()!='']
+        styleList = [rule.strip() for rule in styleString.split(';') if rule.strip()!='']
         styleList.sort()
-        styleKey = str().join(styleList)
+        styleKey = ';'.join(styleList)
         if(not self.stylesDict.has_key(styleKey)):
             self.stylesDict[styleKey] = []
         if(not self.stylesDict[styleKey].count(styleString)):
