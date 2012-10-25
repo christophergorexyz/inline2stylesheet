@@ -11,7 +11,6 @@ class inline2stylesheet(HTMLParser):
         styleString = attrDict['style']
         styleList = [rule.strip() for rule in styleString.split(';') if rule.strip()!='']
         styleList.sort();
-        import pdb; pdb.set_trace();
     def handle_endtag(self, tag):
         self.tagNest.pop();
 if __name__=="__main__":
