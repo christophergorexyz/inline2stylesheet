@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from HTMLParser import HTMLParser
+from os.path import exists
 class inline2stylesheet(HTMLParser):
     """this class extends the HTMLParser to extract the css from the style attributes of html elements, and output them in a generated css file"""
     stylesDict = {}
@@ -22,8 +23,21 @@ class inline2stylesheet(HTMLParser):
     def printStyles(self):
         for key in self.stylesDict.keys():
             print key
+    def output(self, fileName="out.css"):
+        if not exists(fileName):
+            index = 0;
+            with open(fileName, 'w') as f:
+                try:
+                    for key in self.stylesDict.keys():
+                        index += 1
+                        rule = ".class" + str(index) + "{\n" + key + ";\n}\n"
+                        f.write(rule)
+                except IOError as e:
+                    print "IOError, couldn't read file " + fileName
+                finally:
+                    f.close()
 if __name__=="__main__":
     f = file('index.html')
     p = inline2stylesheet()
     p.feed(f.read())
-    p.printStyles()
+    p.output()
