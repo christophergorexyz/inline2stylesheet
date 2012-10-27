@@ -7,13 +7,13 @@ class inline2stylesheet(HTMLParser):
     tagNest = []
     def handle_starttag(self, tag, attrs):
         self.tagNest.append(tag)
-        if(len(attrs) <= 0): return
+        if(not len(attrs)): return
         attrDict = dict(attrs)
         if(not attrDict.has_key('style')): return
         styleString = attrDict['style']
         styleList = [rule.strip() for rule in styleString.split(';') if rule.strip()!='']
         styleList.sort()
-        styleKey = ';'.join(styleList)
+        styleKey = ";\n\t".join(styleList)
         if(not self.stylesDict.has_key(styleKey)):
             self.stylesDict[styleKey] = []
         if(not self.stylesDict[styleKey].count(styleString)):
@@ -30,7 +30,7 @@ class inline2stylesheet(HTMLParser):
                 try:
                     for key in self.stylesDict.keys():
                         index += 1
-                        rule = ".class" + str(index) + "{\n" + key + ";\n}\n"
+                        rule = ".class" + str(index) + "{\n\t" + key + ";\n}\n"
                         f.write(rule)
                 except IOError as e:
                     print "IOError, couldn't read file " + fileName
