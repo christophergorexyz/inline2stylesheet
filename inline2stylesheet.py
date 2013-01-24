@@ -3,7 +3,9 @@ from HTMLParser import HTMLParser
 from os.path import exists
 
 class inline2stylesheet(HTMLParser):
-    """this class extends the HTMLParser to extract the css from the style attributes of html elements, and output them in a generated css file"""
+    """this class extends the HTMLParser to extract the css
+    from the style attributes of html elements, and output
+    them in a generated css file"""
     stylesDict = {}
     tagNest = []
 
@@ -43,7 +45,6 @@ class inline2stylesheet(HTMLParser):
                     f.close()
 
 if __name__=="__main__":
-    
     f = file('index.html')
     p = inline2stylesheet()
     p.feed(f.read())
