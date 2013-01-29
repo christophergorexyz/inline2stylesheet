@@ -1,11 +1,12 @@
 #!/usr/bin/python
 from HTMLParser import HTMLParser
 from os.path import exists
+import argparse
 
 class inline2stylesheet(HTMLParser):
-    """this class extends the HTMLParser to extract the css
+    """This class extends the HTMLParser to extract the css
     from the style attributes of html elements, and output
-    them in a generated css file"""
+    them in a generated css file."""
     stylesDict = {}
     tagNest = []
 
@@ -45,7 +46,11 @@ class inline2stylesheet(HTMLParser):
                     f.close()
 
 if __name__=="__main__":
-    f = file('index.html')
+    parser = argparse.ArgumentParser(description="Process HTML files and extract style attributes into an external css file.")
+    parser.add_argument("file", type=file, help="An html file to parse.", default="index.html")
+    #parser.add_argument("-o", "--output", dest="output", default="out.css", help="A CSS file to output the styles to.")
+    args = parser.parse_args()    
+    f = args.file
     p = inline2stylesheet()
     p.feed(f.read())
     p.output()
