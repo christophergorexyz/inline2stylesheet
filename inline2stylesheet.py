@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from HTMLParser import HTMLParser
 from os.path import exists
+from optparse import OptionParser
 
 class inline2stylesheet(HTMLParser):
     """this class extends the HTMLParser to extract the css
@@ -45,6 +46,10 @@ class inline2stylesheet(HTMLParser):
                     f.close()
 
 if __name__=="__main__":
+    optParser = OptionParser()
+    parser.add_option("-f", "--file", dest="filename", help="write output to the specified file")
+    (options, args) = parser.parse_args()
+
     f = file('index.html')
     p = inline2stylesheet()
     p.feed(f.read())
